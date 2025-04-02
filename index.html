@@ -276,11 +276,11 @@
             const statusBadge = li.querySelector('.status-badge');
             if (isAccessible) {
                 li.classList.remove('disabled');
-                statusBadge.textContent = '正常';
+                statusBadge.textContent = 'normal';
                 statusBadge.className = 'status-badge status-normal';
             } else {
                 li.classList.add('disabled');
-                statusBadge.textContent = '无法访问';
+                statusBadge.textContent = 'No access';
                 statusBadge.className = 'status-badge status-error';
             }
         }
