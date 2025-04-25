@@ -1,1 +1,56 @@
-#tomandjerry #tomjerry #jerryandtom #tomandjerryedits #tomandjerry🤣 #tom_and_jerry #tomyjerry #tometjerry #tom and jerry da #tom and jerry
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>复制文字</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      background-color: #f9f9f9;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .text {
+      margin-bottom: 20px;
+      word-break: break-word;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+      background-color: #4CAF50;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div id="text" class="text">
+      #tomandjerry #tomjerry #jerryandtom #tomandjerryedits #tomandjerry🤣 #tom_and_jerry #tomyjerry #tometjerry #tom and jerry da #tom and jerry
+    </div>
+    <button onclick="copyText()">点击复制</button>
+  </div>
+
+  <script>
+    function copyText() {
+      const text = document.getElementById("text").innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        alert("复制成功！");
+      }).catch(err => {
+        alert("复制失败: " + err);
+      });
+    }
+  </script>
+</body>
+</html>
