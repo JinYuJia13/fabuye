@@ -1,62 +1,98 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>复制文字</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 40px;
-      background-color: #f9f9f9;
-    }
-    。container {
-      max-width: 600px;
-      margin: auto;
-      background: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      text-align: center;
-    }
-    。text {
-      margin-bottom: 20px;
-      word-break: break-word;
-    }
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-      border: none;
-      border-radius: 5px;
-      background-color: #4CAF50;
-      color: white;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>复制文字片段</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Using a modern font */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
 </head>
-<body>
-  <div class="container">
-    <div id="text" class="text">
-      No downloads. No cost. Just one selfie — and your AI skin report is ready. #freeai #aianalysis #skintest #selfiecheck #beautytech #nofilterneeded #glowupcheck #skincaretools #faceanalysis #tryitfree
-    </div>
-    <button onclick="copyText()">点击复制</button>
-  </div>
-  <div class="container">
-    <div id="text" class="text">
-      #baby #cute #cutebaby #AI #fyp #viral
-    </div>
-    <button onclick="copyText()">点击复制</button>
-  </div>
+<body class="bg-gray-900 flex items-center justify-center min-h-screen p-4">
 
-  <script>
-    function copyText() {
-      const text = document.getElementById("text").innerText;
-      navigator.clipboard.writeText(text).then(() => {
-        alert("复制成功！");
-      }).catch(err => {
-        alert("复制失败: " + err);
-      });
-    }
-  </script>
+    <div class="w-full max-w-md space-y-6">
+        <!-- Card 1 -->
+        <div class="bg-gray-800 rounded-xl shadow-2xl p-6 text-center">
+            <p id="text1" class="text-gray-300 mb-5 text-left break-words leading-relaxed">
+                No downloads. No cost. Just one selfie — and your AI skin report is ready. #freeai #aianalysis #skintest #selfiecheck #beautytech #nofilterneeded #glowupcheck #skincaretools #faceanalysis #tryitfree
+            </p>
+            <button onclick="copyText(this, 'text1')" class="w-full bg-indigo-600 text-white font-semibold py-3 px-4 rounded-lg hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-indigo-500 transition-all duration-300 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed">
+                点击复制
+            </button>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="bg-gray-800 rounded-xl shadow-2xl p-6 text-center">
+            <p id="text2" class="text-gray-300 mb-5 text-left break-words leading-relaxed">
+                #baby #cute #cutebaby #AI #fyp #viral
+            </p>
+            <button onclick="copyText(this, 'text2')" class="w-full bg-teal-600 text-white font-semibold py-3 px-4 rounded-lg hover:bg-teal-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-teal-500 transition-all duration-300 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed">
+                点击复制
+            </button>
+        </div>
+    </div>
+
+    <script>
+        /**
+         * Copies the text from a specified element to the clipboard.
+         * @param {HTMLElement} button - The button element that was clicked.
+         * @param {string} elementId - The ID of the element containing the text to copy.
+         */
+        function copyText(button, elementId) {
+            // Find the text element by its unique ID
+            const textElement = document.getElementById(elementId);
+            if (!textElement) {
+                console.error("Element with ID '" + elementId + "' not found.");
+                return;
+            }
+            const textToCopy = textElement.innerText;
+
+            // Use a temporary textarea element to hold the text for the copy command.
+            // This is a robust method that works across most browsers.
+            const textArea = document.createElement("textarea");
+            
+            // Style the textarea to be invisible and not affect the layout
+            textArea.style.position = 'fixed';
+            textArea.style.top = '-9999px';
+            textArea.style.left = '-9999px';
+            textArea.value = textToCopy;
+
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+
+            try {
+                // Execute the copy command
+                document.execCommand('copy');
+
+                // Provide visual feedback to the user
+                const originalText = button.innerText;
+                button.innerText = '已复制!';
+                button.disabled = true; // Disable button to prevent multiple clicks
+
+                // Revert the button text after 2 seconds
+                setTimeout(() => {
+                    button.innerText = originalText;
+                    button.disabled = false;
+                }, 2000);
+
+            } catch (err) {
+                console.error('Fallback: Oops, unable to copy', err);
+                // You could add a user-facing error message here if needed
+            }
+
+            // Clean up by removing the temporary textarea
+            document.body.removeChild(textArea);
+        }
+    </script>
+
 </body>
 </html>
